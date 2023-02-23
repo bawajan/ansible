@@ -1,5 +1,5 @@
 ---
-- name: "Creat Pull Secret"
+- name: "Creat Pull Secret xxx"
   command: "kubectl -n psns create secret docker-registry testregistry --docker-username='bawajan' \
             --docker-password='gulam1976'"
   register: create_secret
