@@ -1,0 +1,21 @@
+---
+- name: Test Play
+  #  hosts: ubuntu1,ubuntu2,ubuntu3
+  hosts: web
+  tasks:
+    - name: Play1
+      debug:
+        msg: "Hello World I am ubuntu1"
+   
+    - name: Play2
+      ansible.builtin.shell: /usr/bin/hostname
+      register: result
+
+    - name: Debug Message print
+      debug:
+        var: result.stdout
+
+    - name: Test
+      debug:
+        var: hostvars
+        verbosity: 4

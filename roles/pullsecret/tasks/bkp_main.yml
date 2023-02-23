@@ -1,0 +1,38 @@
+---
+- name: "Creat Pull Secret"
+  command: "kubectl -n psns create secret docker-registry testregistry --docker-username='bawajan' \
+            --docker-password='gulam1976'"
+  register: create_secret
+  changed_when: "'already exists' not in create_secret.stderr"
+  failed_when: 
+    - create_secret.rc > 0
+    - "'already exists' not in create_secret.stderr"
+
+- name: debug
+  debug:
+    var: create_secret
+
+- name: "Taint"
+  command: "kubectl taint nodes minikube node-role.kubernetes.io/master=value1:NoSchedule"
+  register: taint_status
+  changed_when: "'not found' not in taint_status.stderr"
+  failed_when:
+    - taint_status.rc > 0
+    - "'not found' not in taint_status.stderr"
+
+- name: Taint Debug
+  debug:
+    var: taint_status
+
+- name: UnTaint status
+  kubernetes.core.k8s_taint:
+    state: absent
+    name: "minikube"
+    taints: 
+    - effect: NoSchedule
+      key: "node-role.kubernetes.io/master"
+  register: existing_taint
+
+- name: Taint Debug 2
+  debug:
+    var: existing_taint

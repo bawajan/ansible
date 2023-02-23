@@ -1,0 +1,8 @@
+---
+- name: Play2
+  ansible.builtin.shell: /usr/bin/uptime
+  register: result
+
+- name: Debug Message print
+  debug:
+    var: result.stdout

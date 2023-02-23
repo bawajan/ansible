@@ -1,0 +1,21 @@
+---
+- name: Retrieve Dockerr registry authentication information
+  docker_login:
+    username: bawajan
+    password: gulam1976 
+    registry: testregistry
+  register: docker_login_result
+
+- name: Create pull secret
+  k8s:
+    state: present
+    namespace: psns
+    definition:
+      kind: Secret
+      apiVersion: v1
+      metadata:
+        name: my-pull-secret
+      type: kubernetes.io/dockerconfigjson
+      data:
+        .dockerconfigjson: "{{ docker_login_result | json_query('RegistryConfig.dockerconfigjson') | b64encode }}"
+

@@ -1,0 +1,8 @@
+[web]
+ubuntu1 ansible_host=192.168.122.182
+[db]
+ubuntu2 ansible_host=192.168.122.192
+[app]
+ubuntu3 ansible_host=192.168.122.246
+[mini]
+mini ansible_host=192.168.49.2

@@ -1,0 +1,5 @@
+---
+- name: Roles Test
+  hosts: all
+  roles:
+    - testrole
